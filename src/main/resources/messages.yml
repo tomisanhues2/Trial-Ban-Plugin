@@ -1,2 +1,9 @@
 use-prefix: true
 prefix: '&6&lBAN &r&6>>&r '
+
+sender-not-player: '&cYou must be a player to execute this command.'
+no-permission: '&cYou do not have permission to execute this command.'
+
+ban-usage: '&cUsage: /ban <player> [duration] [reason]'
+unban-usage: '&cUsage: /unban <player>'
+history-usage: '&cUsage: /history <player>'

@@ -4,4 +4,15 @@ main: me.tomisanhues2.bantrial.Ban
 author: Tomisanhues2
 api-version: "1.13"
 load: POSTWORLD
-softdepend:
+commands:
+  ban:
+    description: Ban a player
+    aliases: tempban
+    permission: bantrial.ban
+  unban:
+    description: Unban a player
+    permission: bantrial.unban
+  history:
+    description: View a player's ban history
+    permission: bantrial.history
+

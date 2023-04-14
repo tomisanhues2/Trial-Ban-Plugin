@@ -1,0 +1,7 @@
+name: BanTrial
+version: ${project.version}
+main: me.tomisanhues2.bantrial.Ban
+author: Tomisanhues2
+api-version: "1.13"
+load: POSTWORLD
+softdepend:

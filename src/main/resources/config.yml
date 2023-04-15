@@ -1,0 +1,10 @@
+#MYSQL CONFIGURATION
+#REQUIRED
+mysql:
+  host:
+  port:
+  username:
+  password:
+  database-name: "bantrial"
+  useSSL: false
+  allowPublicKeyRetrieval: false

@@ -10,12 +10,11 @@ public class Messages {
 
     private final Ban plugin;
     private final String prefix;
-    private File file;
-    private FileConfiguration config;
+    private final FileConfiguration config;
 
     public Messages(Ban plugin) {
         this.plugin = plugin;
-        file = new File(plugin.getDataFolder(), "messages.yml");
+        File file = new File(plugin.getDataFolder(), "messages.yml");
         if (!file.exists()) plugin.saveResource("messages.yml", false);
         config = plugin.getConfig();
         try {
@@ -34,6 +33,7 @@ public class Messages {
     }
 
     public String getMessage(String path) {
+        System.out.println(path);
         String message = config.getString(path);
         if (message == null) return "Message not found";
         return ChatColor.translateAlternateColorCodes('&',prefix + message);

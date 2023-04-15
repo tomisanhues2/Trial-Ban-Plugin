@@ -31,11 +31,16 @@ public class BanCommand implements TabExecutor {
             return true;
         }
 
-        if (strings.length == 0) {
-            commandSender.sendMessage(plugin.messages.getMessage("ban-usage"));
+        if (strings.length < 3) {
+            commandSender.sendMessage(plugin.messages.getMessage("ban-usage"));active_bans
             return true;
         }
         //todo: Ban logic
+        Player target = plugin.getServer().getPlayer(strings[0]);
+        if (target == null) {
+            commandSender.sendMessage(plugin.messages.getMessage("player-not-found"));
+            return true;
+        }g
 
         return true;
     }

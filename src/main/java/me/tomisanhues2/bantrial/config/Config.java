@@ -4,6 +4,7 @@ import me.tomisanhues2.bantrial.Ban;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.util.concurrent.Callable;
 
 public class Config {
 

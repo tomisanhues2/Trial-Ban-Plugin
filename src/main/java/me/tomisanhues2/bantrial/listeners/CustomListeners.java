@@ -16,7 +16,8 @@ public class CustomListeners implements Listener {
 
     @EventHandler
     public void PlayerBanEvent(PlayerBanEvent event) {
-        if (!Bukkit.getOfflinePlayer(event.getBanData().getPlayerUUID()).isOnline()) return;
+        if (!Bukkit.getOfflinePlayer(event.getBanData().getPlayerUUID()).isOnline())
+            return;
         Player player = Bukkit.getPlayer(event.getBanData().getPlayerUUID());
         assert player != null;
         player.kickPlayer("You have been banned for: " + event.getBanData().getReason());

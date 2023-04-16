@@ -9,11 +9,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-
 public class BanManager {
-
     private final Ban plugin;
-
 
     public BanManager(Ban plugin) {
         this.plugin = plugin;
@@ -26,9 +23,10 @@ public class BanManager {
         System.out.println("Duration: " + duration);
         System.out.println("Banner UUID: " + bannerUUID);
         Objects.requireNonNull(Bukkit.getPlayer(bannerUUID)).sendMessage("Banned " + Bukkit.getOfflinePlayer(playerUUID).getName() + " for " + duration + " for " + reason);
-        BanData banData = new BanData(playerUUID, new Date(), duration, reason, bannerUUID);
+        BanData banData =
+                new BanData(playerUUID, new Date(), duration, reason, bannerUUID);
         plugin.database.processBan(banData);
-        //Bukkit.getPluginManager().callEvent(new PlayerBanEvent(banData));
+        Bukkit.getPluginManager().callEvent(new PlayerBanEvent(banData));
     }
 
     public void removeBan(UUID playerUUID) {

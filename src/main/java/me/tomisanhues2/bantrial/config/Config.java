@@ -5,10 +5,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 public class Config {
-
     private final Ban plugin;
     private File file;
     private FileConfiguration config;

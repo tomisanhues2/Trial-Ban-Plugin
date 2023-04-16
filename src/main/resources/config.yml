@@ -1,6 +1,6 @@
 #MYSQL CONFIGURATION
 #REQUIRED
-mysql:
+database:
   host:
   port:
   username:
@@ -8,3 +8,13 @@ mysql:
   database-name: "bantrial"
   useSSL: false
   allowPublicKeyRetrieval: false
+
+gui-history-format:
+  - "&7&m----------------------------------------"
+  - "&7&lReason: &f%reason%"
+  - "&7&lDate: &f%date%"
+  - "&7&lBanned by: &f%banner%"
+  - "&7&lDuration: &f%duration%"
+  - "&7&lBanned until: &f%unbandate%"
+  - "&7&lStatus: &f%status%"
+  - "&7&m----------------------------------------"

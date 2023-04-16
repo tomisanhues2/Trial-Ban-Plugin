@@ -6,9 +6,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.Objects;
 
 public class Messages {
-
     private final Ban plugin;
     private final String prefix;
     private final FileConfiguration config;
@@ -27,7 +27,8 @@ public class Messages {
         }
 
         if (config.getBoolean("use-prefix")) {
-            prefix = config.getString("prefix");
+            prefix =
+                    ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("prefix")));
         } else {
             prefix = "";
         }
@@ -37,6 +38,10 @@ public class Messages {
         System.out.println(path);
         String message = config.getString(path);
         if (message == null) return "Message not found";
-        return ChatColor.translateAlternateColorCodes('&',prefix + message);
+        return ChatColor.translateAlternateColorCodes('&', prefix + message);
+    }
+
+    public String getPrefix() {
+        return prefix;
     }
 }

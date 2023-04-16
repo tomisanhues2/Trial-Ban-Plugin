@@ -5,6 +5,7 @@ sender-not-player: '&cYou must be a player to execute this command.'
 no-permission: '&cYou do not have permission to execute this command.'
 player-already-banned: '&cThat player is already banned.'
 player-not-banned: '&cThat player is not banned.'
+unban-success: '&aYou have unbanned &6%player%&a.'
 
 ban-usage: '&cUsage: /ban <player> [duration] [reason]'
 unban-usage: '&cUsage: /unban <player>'

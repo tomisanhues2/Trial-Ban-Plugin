@@ -6,10 +6,8 @@ import me.tomisanhues2.bantrial.data.History;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class MySQLDatabase extends Database {
     private final String HOST;
@@ -110,8 +108,7 @@ public class MySQLDatabase extends Database {
     public void processBan(BanData ban) {
         addActiveBan(ban);
         addNewHistory(ban);
-        if (!isPlayerInList(ban.getPlayerUUID()))
-            addPlayerToDatabase(ban);
+        if (!isPlayerInList(ban.getPlayerUUID())) addPlayerToDatabase(ban);
     }
 
     public void expireBan(UUID uuid) {
@@ -219,25 +216,6 @@ public class MySQLDatabase extends Database {
         }
     }
 
-    public boolean playerHasHistory(UUID uuid) {
-        //Check if the player is in the banned_players table and return true if they are
-        try {
-            PreparedStatement ps =
-                    connection.prepareStatement("SELECT * FROM " + this.DATABASE_NAME + ".banned_players WHERE player_uuid = ?");
-            ps.setString(1, uuid.toString());
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            plugin.getLogger().severe("Failed to check ban history in MySQL database at " + this.HOST + ":" + this.PORT + "!");
-            plugin.getLogger().severe("Attempting to reconnect to MySQL database at " + this.HOST + ":" + this.PORT + "...");
-            if (reconConn())
-                plugin.getLogger().info("Successfully reconnected to MySQL database at " + this.HOST + ":" + this.PORT + "!");
-            else
-                plugin.getLogger().severe("Failed to reconnect to MySQL database at " + this.HOST + ":" + this.PORT + "!");
-        }
-        return false;
-    }
-
     public ArrayList<History> getHistories(UUID playerUUID) {
         ArrayList<History> histories = new ArrayList<>();
         try {
@@ -297,4 +275,32 @@ public class MySQLDatabase extends Database {
         }
         return false;
     }
+
+    public BanData getActiveBan(UUID playerUUID) {
+        try {
+            PreparedStatement ps =
+                    connection.prepareStatement("SELECT * FROM " + this.DATABASE_NAME + ".active_bans WHERE player_uuid = ?");
+            ps.setString(1, playerUUID.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                BanData banData = new BanData(playerUUID);
+                banData.setBannerUUID(UUID.fromString(rs.getString(3)));
+                banData.setReason(rs.getString(4));
+                banData.setBanDate(new Date(rs.getLong(5)));
+                banData.setDuration(rs.getString(6));
+                banData.processUnbanDate();
+                return banData;
+            }
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Failed to get ban data from MySQL database at " + this.HOST + ":" + this.PORT + "!");
+            plugin.getLogger().severe("Attempting to reconnect to MySQL database at " + this.HOST + ":" + this.PORT + "...");
+            e.printStackTrace();
+            if (reconConn())
+                plugin.getLogger().info("Successfully reconnected to MySQL database at " + this.HOST + ":" + this.PORT + "!");
+            else
+                plugin.getLogger().severe("Failed to reconnect to MySQL database at " + this.HOST + ":" + this.PORT + "!");
+        }
+        return null;
+    }
+
 }

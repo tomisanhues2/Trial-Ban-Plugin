@@ -15,7 +15,4 @@ commands:
   history:
     description: View a player's ban history
     permission: bantrial.history
-  clearall:
-    description: Clear all bans
-    permission: bantrial.clearall
 

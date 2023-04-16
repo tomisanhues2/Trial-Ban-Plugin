@@ -1,6 +1,5 @@
 package me.tomisanhues2.bantrial.gui.abs;
 
-import me.tomisanhues2.bantrial.Ban;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -11,20 +10,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class InventoryGUI implements InventoryHandler {
-    private final Ban plugin = Ban.getInstance();
-    private final Inventory inventory;
     private final Map<Integer, InventoryButton> buttonMap = new HashMap<>();
     private final Map<Integer, InventoryItem> itemMap = new HashMap<>();
-
     protected int currentPage;
     protected int maxPages;
+    private Inventory inventory;
 
     public InventoryGUI(int maxPages) {
-        this.inventory = this.createInventory();
         this.maxPages = (maxPages / 45);
         currentPage = 0;
     }
@@ -33,9 +28,11 @@ public abstract class InventoryGUI implements InventoryHandler {
         return inventory;
     }
 
-    public void decorate(Player player) {
-        System.out.println("Current page: " + this.currentPage);
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 
+    public void decorate(Player player) {
         this.itemMap.forEach((slot, item) -> {
             ItemStack itemStack = item.getIconCreator().apply(player);
             this.inventory.setItem(slot, itemStack);

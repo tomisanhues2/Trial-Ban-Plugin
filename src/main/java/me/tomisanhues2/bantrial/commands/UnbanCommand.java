@@ -1,10 +1,11 @@
 package me.tomisanhues2.bantrial.commands;
 
 import me.tomisanhues2.bantrial.Ban;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -17,11 +18,6 @@ public class UnbanCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (!(commandSender instanceof Player)) {
-            commandSender.sendMessage(plugin.messages.getMessage("sender-not-player"));
-            return true;
-        }
-
         if (!command.getName().equalsIgnoreCase("unban")) {
             return true;
         }
@@ -35,7 +31,9 @@ public class UnbanCommand implements TabExecutor {
             commandSender.sendMessage(plugin.messages.getMessage("unban-usage"));
             return true;
         }
-        Player target = plugin.getServer().getPlayer(strings[0]);
+        System.out.println(strings[0]);
+        OfflinePlayer target = Bukkit.getOfflinePlayer(strings[0]);
+
         if (target == null) {
             commandSender.sendMessage(plugin.messages.getMessage("player-not-found"));
             return true;
@@ -45,7 +43,7 @@ public class UnbanCommand implements TabExecutor {
             return true;
         }
         plugin.banManager.removeBan(target.getUniqueId());
-        commandSender.sendMessage("You have unbanned " + target.getName());
+        commandSender.sendMessage(plugin.messages.getMessage("unban-success").replace("%player%", target.getName()));
 
         return true;
     }
@@ -53,6 +51,6 @@ public class UnbanCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         //todo: Tab complete logic
-        return null;
+        return List.of();
     }
 }

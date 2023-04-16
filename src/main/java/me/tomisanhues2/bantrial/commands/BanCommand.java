@@ -32,13 +32,11 @@ public class BanCommand implements TabExecutor {
             commandSender.sendMessage(plugin.messages.getMessage("no-permission"));
             return true;
         }
-        System.out.println("Strings: " + Arrays.toString(strings));
 
         if (strings.length == 0) {
             commandSender.sendMessage(plugin.messages.getMessage("ban-usage"));
             return true;
         }
-        //todo: Ban logic
         Player target = plugin.getServer().getPlayer(strings[0]);
         if (target == null) {
             commandSender.sendMessage(plugin.messages.getMessage("player-not-found"));
@@ -52,15 +50,19 @@ public class BanCommand implements TabExecutor {
             plugin.banManager.addBan(target.getUniqueId(), "You have been banned!", BanType.PERM_BAN.toString(), ((Player) commandSender).getUniqueId());
             return true;
         }
+
         String arg1 = strings[1];
         boolean hasDuration = Character.isDigit(arg1.charAt(0));
         String duration = BanType.PERM_BAN.toString();
         String reason = String.join(" ", Arrays.copyOfRange(strings, 1, strings.length));
 
-        //Find out if arg1 is a time or a reason
         if (hasDuration) {
             duration = arg1;
             reason = String.join(" ", Arrays.copyOfRange(strings, 2, strings.length));
+        }
+        if (strings.length == 2) {
+            plugin.banManager.addBan(target.getUniqueId(), "You have been banned!", duration, ((Player) commandSender).getUniqueId());
+            return true;
         }
         plugin.banManager.addBan(target.getUniqueId(), reason, duration, ((Player) commandSender).getUniqueId());
 
@@ -69,7 +71,9 @@ public class BanCommand implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        //todo: Tab complete logic
+        if (strings.length != 1) {
+            return List.of();
+        }
         return null;
     }
 }

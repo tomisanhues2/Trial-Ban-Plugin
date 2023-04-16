@@ -5,11 +5,8 @@ import me.tomisanhues2.bantrial.Ban;
 import java.sql.Connection;
 
 public abstract class Database implements IDatabase {
-
-    protected Ban plugin = Ban.getInstance();
-
     public Connection connection;
-
+    protected Ban plugin = Ban.getInstance();
     public Database() {
         connection = null;
     }

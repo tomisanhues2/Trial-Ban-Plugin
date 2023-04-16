@@ -2,7 +2,6 @@ package me.tomisanhues2.bantrial;
 
 import me.tomisanhues2.bantrial.commands.BanCommand;
 import me.tomisanhues2.bantrial.commands.HistoryCommand;
-import me.tomisanhues2.bantrial.commands.TestCommand;
 import me.tomisanhues2.bantrial.commands.UnbanCommand;
 import me.tomisanhues2.bantrial.config.Config;
 import me.tomisanhues2.bantrial.config.Messages;
@@ -11,6 +10,8 @@ import me.tomisanhues2.bantrial.database.Database;
 import me.tomisanhues2.bantrial.database.MySQLDatabase;
 import me.tomisanhues2.bantrial.gui.GUIListener;
 import me.tomisanhues2.bantrial.gui.GUIManager;
+import me.tomisanhues2.bantrial.listeners.CustomListeners;
+import me.tomisanhues2.bantrial.listeners.PlayerListeners;
 import me.tomisanhues2.bantrial.utils.Utils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,13 +19,11 @@ import java.sql.SQLException;
 
 public class Ban extends JavaPlugin {
     private static Ban instance;
-
     public Messages messages;
     public Config config;
     public Utils utils;
     public Database database;
     public BanManager banManager;
-
     public GUIManager guiManager;
 
 
@@ -55,12 +54,13 @@ public class Ban extends JavaPlugin {
         guiManager = new GUIManager();
         GUIListener guiListener = new GUIListener(guiManager);
         getServer().getPluginManager().registerEvents(guiListener, this);
+        getServer().getPluginManager().registerEvents(new CustomListeners(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerListeners(this), this);
 
         getCommand("ban").setExecutor(new BanCommand(this));
         getCommand("unban").setExecutor(new UnbanCommand(this));
         getCommand("history").setExecutor(new HistoryCommand(this));
 
-        getCommand("clearall").setExecutor(new TestCommand());
     }
 
     @Override

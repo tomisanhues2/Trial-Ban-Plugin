@@ -1,6 +1,5 @@
 package me.tomisanhues2.bantrial.gui;
 
-
 import me.tomisanhues2.bantrial.gui.abs.InventoryGUI;
 import me.tomisanhues2.bantrial.gui.abs.InventoryHandler;
 import org.bukkit.entity.Player;

@@ -4,11 +4,9 @@ import me.tomisanhues2.bantrial.Ban;
 import org.bukkit.Material;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class History {
-    private static final Ban plugin = Ban.getInstance();
     private int id;
     private UUID playerUUID;
     private UUID bannerUUID;
@@ -16,8 +14,18 @@ public class History {
     private Date date;
     private Date unbanDate;
     private String duration;
-
     private String status;
+
+    public History(int id, UUID playerUUID, UUID bannerUUID, String reason, Date date, String duration, Date unbanDate, String status) {
+        this.id = id;
+        this.playerUUID = playerUUID;
+        this.bannerUUID = bannerUUID;
+        this.reason = reason;
+        this.date = date;
+        this.duration = duration;
+        this.unbanDate = unbanDate;
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -51,21 +59,4 @@ public class History {
         return status;
     }
 
-    public History(int id, UUID playerUUID, UUID bannerUUID, String reason, Date date, String duration, Date unbanDate, String status) {
-        this.id = id;
-        this.playerUUID = playerUUID;
-        this.bannerUUID = bannerUUID;
-        this.reason = reason;
-        this.date = date;
-        this.duration = duration;
-        this.unbanDate = unbanDate;
-        this.status = status;
-    }
-
-    public Material getMaterial() {
-        if (status.equalsIgnoreCase("ACTIVE")) {
-            return Material.REDSTONE_BLOCK;
-        }
-        return Material.LIME_STAINED_GLASS;
-    }
 }

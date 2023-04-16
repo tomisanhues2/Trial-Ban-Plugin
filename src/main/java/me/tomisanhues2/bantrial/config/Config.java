@@ -2,6 +2,7 @@ package me.tomisanhues2.bantrial.config;
 
 import me.tomisanhues2.bantrial.Ban;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.concurrent.Callable;
@@ -16,7 +17,7 @@ public class Config {
         this.plugin = plugin;
         file = new File(plugin.getDataFolder(), "config.yml");
         if (!file.exists()) plugin.saveResource("config.yml", false);
-        config = plugin.getConfig();
+        config = new YamlConfiguration();
         try {
             config.load(file);
             plugin.getLogger().info("Loaded config.yml");

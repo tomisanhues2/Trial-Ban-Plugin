@@ -3,6 +3,7 @@ package me.tomisanhues2.bantrial.config;
 import me.tomisanhues2.bantrial.Ban;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
@@ -16,7 +17,7 @@ public class Messages {
         this.plugin = plugin;
         File file = new File(plugin.getDataFolder(), "messages.yml");
         if (!file.exists()) plugin.saveResource("messages.yml", false);
-        config = plugin.getConfig();
+        config = new YamlConfiguration();
         try {
             config.load(file);
             plugin.getLogger().info("Loaded messages.yml");

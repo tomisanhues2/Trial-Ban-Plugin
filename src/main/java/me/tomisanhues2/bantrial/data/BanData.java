@@ -14,7 +14,6 @@ public class BanData {
     private final Ban plugin = Ban.getInstance();
     private final UUID playerUUID;
 
-    private BanType banType;
     private Date banDate;
     private String duration;
     private String reason;
@@ -23,32 +22,24 @@ public class BanData {
     @Nullable
     private Date unbanDate;
 
-    public BanData(UUID playerUUID, BanType banType, String duration, String reason, @Nullable UUID bannerUUID) {
-        if (Bukkit.getPlayer(playerUUID) == null) {
-            throw new IllegalArgumentException("Player UUID is not valid");
-        }
+    public BanData(UUID playerUUID, Date banDate, String duration, String reason, UUID bannerUUID) {
         this.playerUUID = playerUUID;
-        this.banType = banType;
+        this.banDate = banDate;
+        this.duration = duration;
         this.reason = reason;
-        this.banDate = new Date();
         this.bannerUUID = bannerUUID;
-        if (plugin.utils.getBanType(duration) == BanType.PERM_BAN) {
-            this.duration = "PERMANENT";
+        if (duration.equalsIgnoreCase("PERM_BAN")) {
             this.unbanDate = null;
         } else {
-            this.duration = duration;
             this.unbanDate = plugin.utils.calculateUnbanDate(duration);
         }
-        plugin.database.saveBan(this);
+
     }
 
     public UUID getPlayerUUID() {
         return playerUUID;
     }
 
-    public BanType getBanType() {
-        return banType;
-    }
 
     public Date getBanDate() {
         return banDate;
@@ -73,10 +64,6 @@ public class BanData {
         } else {
             return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.unbanDate);
         }
-    }
-
-    public void setBanType(BanType banType) {
-        this.banType = banType;
     }
 
     public void setBanDate(Date banDate) {

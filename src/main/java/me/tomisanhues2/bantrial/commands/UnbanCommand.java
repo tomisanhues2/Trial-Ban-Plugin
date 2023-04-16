@@ -35,7 +35,17 @@ public class UnbanCommand implements TabExecutor {
             commandSender.sendMessage(plugin.messages.getMessage("unban-usage"));
             return true;
         }
-        //todo: Unban logic
+        Player target = plugin.getServer().getPlayer(strings[0]);
+        if (target == null) {
+            commandSender.sendMessage(plugin.messages.getMessage("player-not-found"));
+            return true;
+        }
+        if (!plugin.database.isPlayerActiveBan(target.getUniqueId())) {
+            commandSender.sendMessage(plugin.messages.getMessage("player-not-banned"));
+            return true;
+        }
+        plugin.banManager.removeBan(target.getUniqueId());
+        commandSender.sendMessage("You have unbanned " + target.getName());
 
         return true;
     }
